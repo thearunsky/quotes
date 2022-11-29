@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quouts</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+              <div class="card" style="border-radius: 15px;">
+                <div class="card-body p-5">
+      
+                  <div class="text-center mb-4 pb-2">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-quotes/bulb.webp"
+                      alt="Bulb" width="100">
+                  </div>
+      
+                  <figure class="text-center mb-0">
+                    <blockquote class="blockquote">
+                      <p class="pb-3">
+                        <i class="fas fa-quote-left fa-xs text-primary"></i>
+                        <span id="quotes" class="lead font-italic">
+                          <!-- TEXT -->
+                        </span>
+                        <i class="fas fa-quote-right fa-xs text-primary"></i>
+                      </p>
+                    </blockquote>
+                    <figcaption id="author" class="blockquote-footer mb-0">
+                      <!-- AUTHOR -->
+                    </figcaption>
+                    <div class="row">
+                    <button type="button" onclick="tweet()" class="col-lg-6 w-50 btn btn-primary btn-lg btn-block">Tweet It !</button>
+                    <button type="button" onclick="getNewQuotes()" class="col-lg-6 w-50 btn btn-primary btn-lg btn-block">Next qoutes</button>
+                      </div>
+                  </figure>
+                  
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+<script>
+  let quotes = document.getElementById("quotes")
+  let author = document.getElementById("author")
+  
+  let result = "";
+  let api = "https://type.fit/api/quotes";
+
+  let tweet = ()=>{
+    post = `https://twitter.com/intent/tweet?text=${result[num].text}`
+    window.open(post)
+  }
+
+  let getQuotes = async () =>{
+    try {
+    let data = await fetch(api);
+    result = await data.json()
+    getNewQuotes();
+    } catch (error) {
+    }
+  };
+  getQuotes();
+
+  let getNewQuotes = ()=>{
+    let num = Math.floor(Math.random() * 200)
+    quotes.innerText = (result[num].text)
+    author.innerText = (result[num].author)
+    // (result[num].author == null) ? (author.innerText = "Unknown") : (author.innerText = `By ${(result[num].author)}`);
+
+  }
+
+</script>
+</body>
+</html>
